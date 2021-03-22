@@ -1,8 +1,13 @@
 /**
  * Step 1 (single sentence) test.
  */
-const parseSingleSentence = require("../step1");
+const parseSingleSentence = require("../services/step1");
+const Chat = require('../models/Chat');
 
-test('parse and split single sentence to array with single object', () =>{
-    expect(parseSingleSentence("...sentence...")).toBe("");
+test('Parse and split single sentence to array with single object', () =>{
+
+    let chat = new Chat();
+
+    expect(Array.isArray(chat.items)).toBe(true);
+
 });
