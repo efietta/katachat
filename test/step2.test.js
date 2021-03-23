@@ -20,13 +20,13 @@ describe ("Retrieve data from the chat with two sentences", () =>  {
     test('First item is customer', () =>{
         let sentences = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n14:26:15 Agent : Aliquam non cursus erat, ut blandit lectus.";
         let typeOutput = "customer";
-        expect(Array.isArray(parseChatSentences(sentences).items[0].type)).toEqual(typeOutput);
+        expect(parseChatSentences(sentences).items[0].type).toEqual(typeOutput);
     });
 
     test('Second item is agent', () =>{
         let sentences = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n14:26:15 Agent : Aliquam non cursus erat, ut blandit lectus.";
         let typeOutput = "agent";
-        expect(Array.isArray(parseChatSentences(sentences).items[1].type)).toEqual(typeOutput);
+        expect(parseChatSentences(sentences).items[1].type).toEqual(typeOutput);
     });
 
 });

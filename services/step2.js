@@ -13,6 +13,8 @@ const ChatItem = require('../models/ChatItem');
 
 const parseSingleSentence = (singleSentence) =>{
 
+    let chatItem;//new ChatItem();
+
     //check chat item not null. We should also check pattern match.
     if (singleSentence) {
         //extract properties from the chat item. I do not use regex for performance issues.
@@ -25,15 +27,23 @@ const parseSingleSentence = (singleSentence) =>{
         let sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
 
         //use ChatItem constructor
-        let chatItem= new ChatItem(dateTime, mentionStr, sentenceStr, 'customer');
+        //chatItem= new ChatItem(dateTime, mentionStr, sentenceStr, 'customer');
+        chatItem= {
+            date: dateTime,
+            mention: mentionStr,
+            sentence: sentenceStr,
+            type: 'customer'
+        };
+        //console.log('chat item type is... ' + chatItem.type);
     }
+    return chatItem;
 }
 
 const parseChatSentences = (chatSentences) =>{
     let chat = new Chat();
 
     //split chat sentences thanks to the new line char
-    let chatItems = chatSentences.split("/n");
+    let chatItems = chatSentences.split("\n");
 
     //for each item of chatItems
     chatItems.forEach(element => {
