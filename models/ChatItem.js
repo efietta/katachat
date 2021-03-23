@@ -1,5 +1,6 @@
 /**
  * Chat item model.
+ * Basic chat object with simple properties.
  */
 
 class ChatItem {
