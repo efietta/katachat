@@ -1,5 +1,5 @@
 /**
- * Step 2 (two sentence).
+ * Step 2 (two sentences).
  * Assuming that:
  *  - new line char \n is the separator
  *  - customer and agent are always not equal strings
