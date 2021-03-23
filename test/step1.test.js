@@ -1,9 +1,14 @@
 /**
  * Step 1 (single sentence) test.
+ * 
  */
 const parseSingleSentence = require("../services/step1");
 const Chat = require('../models/Chat');
 const ChatItem = require('../models/ChatItem');
+
+beforeEach(() => {
+    //optimization with global inputs/outputs
+});
 
 describe ("Retrieve data from the chat", () =>  {
     test('Parse and split single sentence to array with single object', () =>{
