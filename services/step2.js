@@ -1,7 +1,8 @@
 /**
- * Step 2 (two sentences).
+ * Step 2 (two sentences), step 3 and step 4.
+ * 
  * Assuming that:
- *  - new line char \n is the separator
+ *  - new line char \n is the separator. It could be also \r\n.
  *  - customer and agent are always not equal strings
  * 
  **/
@@ -31,8 +32,8 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
         //chatItem= new ChatItem(dateTime, mentionStr, sentenceStr, 'customer');
 
         let typeStr = 'customer';
-        //console.log('Customer user name extracted is: ' + customerUsername);
-        //console.log('Customer user name now is: ' + mentionStr.slice(9, mentionStr.length));
+        console.log('Customer user name extracted is: ' + customerUsername);
+        console.log('Customer user name now is: ' + mentionStr.slice(9, mentionStr.length));
 
         if (mentionStr.slice(9, mentionStr.length) != customerUsername) {
             typeStr = 'agent';
@@ -55,7 +56,14 @@ const parseChatSentences = (chatSentences) =>{
     //check empty string...
 
     //split chat sentences thanks to the new line char
-    let chatItems = chatSentences.split("\n");
+    //regex means
+    // .* any 0 or more chars
+    // (\r?\n) block of optional \r and a \n
+    //let regexpr = /.*(?:$|\r?\n)/g;
+
+    //regex version 2, avoid black item at last. Match any new line *and* the \r\n $(end of string)
+    let regexpr = /[^\n]+(?:\r?\n|$)/g;
+    let chatItems = chatSentences.match(regexpr);
 
     //define once the customer username string
     let mentionStrLength = chatItems[0].split(": ", 1).join(": ").length + 2;
@@ -65,7 +73,7 @@ const parseChatSentences = (chatSentences) =>{
     chatItems.forEach(element => {
         let chatItem = parseSingleSentence(element, customerUsername);
         chat.items.push(chatItem);
-      });
+    });
 
     console.log(chat);
     let items = chat.items;
