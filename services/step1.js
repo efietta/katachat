@@ -36,7 +36,8 @@ const parseSingleSentence = (singleSentence) =>{
         chat.items.push(chatItem);
     }
 
-    return chat;
+    let items = chat.items
+    return items;
 }
 
 module.exports = parseSingleSentence;

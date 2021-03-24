@@ -14,19 +14,19 @@ beforeEach(() => {
 describe ("Retrieve data from the chat with two sentences", () =>  {
     test('Parse and split sentences to array', () =>{
         let sentences = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n14:26:15 Agent : Aliquam non cursus erat, ut blandit lectus.";
-        expect(Array.isArray(parseChatSentences(sentences).items)).toBe(true);
+        expect(Array.isArray(parseChatSentences(sentences))).toBe(true);
     });
 
     test('First item is customer', () =>{
         let sentences = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n14:26:15 Agent : Aliquam non cursus erat, ut blandit lectus.";
         let typeOutput = "customer";
-        expect(parseChatSentences(sentences).items[0].type).toEqual(typeOutput);
+        expect(parseChatSentences(sentences)[0].type).toEqual(typeOutput);
     });
 
     test('Second item is agent', () =>{
         let sentences = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n14:26:15 Agent : Aliquam non cursus erat, ut blandit lectus.";
         let typeOutput = "agent";
-        expect(parseChatSentences(sentences).items[1].type).toEqual(typeOutput);
+        expect(parseChatSentences(sentences)[1].type).toEqual(typeOutput);
     });
 
 });

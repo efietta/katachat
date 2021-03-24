@@ -25,19 +25,19 @@ describe ("Retrieve data from the chat", () =>  {
     test('Chat retrieve date from single item.', () => {
         let input = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
         let dateOutput = "14:24:32";
-        expect(parseSingleSentence(input).items[0].date).toEqual(dateOutput);
+        expect(parseSingleSentence(input)[0].date).toEqual(dateOutput);
     });
 
     test('Chat retrieve mention from single item.', () => {
         let input = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
         let mentionOutput = "14:24:32 Customer : ";
-        expect(parseSingleSentence(input).items[0].mention).toEqual(mentionOutput);
+        expect(parseSingleSentence(input)[0].mention).toEqual(mentionOutput);
     });
 
     test('Chat retrieve sentence from single item.', () => {
         let input = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
         let sentenceOutput = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-        expect(parseSingleSentence(input).items[0].sentence).toEqual(sentenceOutput);
+        expect(parseSingleSentence(input)[0].sentence).toEqual(sentenceOutput);
     });
 
     test('Chat retrieve item properties from single item.', () => {
@@ -48,7 +48,7 @@ describe ("Retrieve data from the chat", () =>  {
             sentence: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             type: "customer"
         }];
-        expect(parseSingleSentence(input).items).toEqual(output);
+        expect(parseSingleSentence(input)).toEqual(output);
     });
 
     test('Chat retrieve item properties from single item with Customer Name and Surname.', () => {
@@ -59,7 +59,7 @@ describe ("Retrieve data from the chat", () =>  {
             sentence: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             type: "customer"
         }];
-        expect(parseSingleSentence(input).items).toEqual(output);
+        expect(parseSingleSentence(input)).toEqual(output);
     });
 
 });

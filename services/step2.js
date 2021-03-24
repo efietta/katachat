@@ -67,8 +67,9 @@ const parseChatSentences = (chatSentences) =>{
         chat.items.push(chatItem);
       });
 
-    //console.log(chat);
-    return chat;
+    console.log(chat);
+    let items = chat.items;
+    return items;
 }
 
 module.exports = parseChatSentences;
