@@ -2,6 +2,19 @@
 
 Node version v15.12.0
 
+---------------------------------------------
+------------ Test Excercise features ------------
+
+Run application from command line
+    
+
+Test with Jest
+
+    npm run test
+
+---------------------------------------------
+------------ Additional features ------------
+
 Additional packages (view package.json dependencies): 
     npm install body-parser
 

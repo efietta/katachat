@@ -44,7 +44,7 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
             sentence: sentenceStr,
             type: typeStr
         };
-        console.log('chat item type is... ' + chatItem.type);
+        //console.log('chat item type is... ' + chatItem.type);
     }
     return chatItem;
 }
@@ -67,6 +67,7 @@ const parseChatSentences = (chatSentences) =>{
         chat.items.push(chatItem);
       });
 
+    //console.log(chat);
     return chat;
 }
 

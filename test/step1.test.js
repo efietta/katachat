@@ -51,4 +51,15 @@ describe ("Retrieve data from the chat", () =>  {
         expect(parseSingleSentence(input).items).toEqual(output);
     });
 
+    test('Chat retrieve item properties from single item with Customer Name and Surname.', () => {
+        let input = "14:24:32 Annet Maria Bianchi : Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+        let output = [{
+            date: "14:24:32",
+            mention: "14:24:32 Annet Maria Bianchi : ",
+            sentence: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            type: "customer"
+        }];
+        expect(parseSingleSentence(input).items).toEqual(output);
+    });
+
 });
