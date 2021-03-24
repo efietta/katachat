@@ -56,7 +56,10 @@ const parseChatSentences = (chatSentences) =>{
 
     //regex
     // note the *? at the end of the regex and see also https://stackoverflow.com/questions/10516458/regex-multiple-matches-on-same-line
-    let regexpr = /(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)([ :,\w]*).*?/g;
+    //let regexpr = /(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)([ :,\w]*).*?/g;
+    
+    //Modified to obtain Step 6 requirements
+    let regexpr = /(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d[ \w]*[:])([ :,\w]*).*?/g;
     let chatItems = chatSentences.match(regexpr);
 
     //define once the customer username string
