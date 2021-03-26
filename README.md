@@ -1,7 +1,4 @@
 ## Kata Chat app ##
-
-Node version v15.12.0
-
 -------------------------------------------------
 ------------ Test Excercise features
 
@@ -57,5 +54,9 @@ Improvements starting from this code stratch:
         improving accurancy of results.
 
 Have fun!
+
+-------------------------------------------------
+
+Node version used: v15.12.0
 
 -------------------------------------------------
