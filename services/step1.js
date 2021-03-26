@@ -8,8 +8,6 @@
  * we can set the property type as 'customer'
  */
 
- // For this Kata we set an initial fixed sentence. It could be retrieved from an API Post request.
-//const singleSentence = "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 const Chat = require('../models/Chat');
 
 const parseSingleSentence = (singleSentence) =>{
@@ -37,8 +35,6 @@ const parseSingleSentence = (singleSentence) =>{
     }
 
     let items = chat.items
-    //console.log('Step 1 result:');
-    //console.log(items);
     return items;
 }
 

@@ -15,7 +15,7 @@ const ChatItem = require('../models/ChatItem');
 
 const parseSingleSentence = (singleSentence, customerUsername) =>{
 
-    let chatItem;//new ChatItem();
+    let chatItem;
 
     //check chat item not null. We should also check pattern match.
     if (singleSentence) {
@@ -27,9 +27,6 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
         let mentionStrLength = singleSentence.split(": ", 1).join(": ").length + 2;
         let mentionStr = singleSentence.slice(0, mentionStrLength);
         let sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
-
-        //use ChatItem constructor
-        //chatItem= new ChatItem(dateTime, mentionStr, sentenceStr, 'customer');
 
         let typeStr = 'customer';
         console.log('Customer user name extracted is: ' + customerUsername);
@@ -45,15 +42,13 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
             sentence: sentenceStr,
             type: typeStr
         };
-        //console.log('chat item type is... ' + chatItem.type);
+
     }
     return chatItem;
 }
 
 const parseChatSentences = (chatSentences) =>{
     let chat = new Chat();
-
-    //check empty string...
 
     //split chat sentences thanks to the new line char
     //regex means

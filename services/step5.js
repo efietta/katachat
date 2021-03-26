@@ -25,9 +25,6 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
         let mentionStr = singleSentence.slice(0, mentionStrLength);
         let sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
 
-        //use ChatItem constructor
-        //chatItem= new ChatItem(dateTime, mentionStr, sentenceStr, 'customer');
-
         let typeStr = 'customer';
         console.log('Customer user name extracted is: ' + customerUsername);
         console.log('Customer user name now is: ' + mentionStr.slice(9, mentionStr.length));
@@ -42,7 +39,7 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
             sentence: sentenceStr,
             type: typeStr
         };
-        //console.log('chat item type is... ' + chatItem.type);
+
     }
     return chatItem;
 }
@@ -52,12 +49,7 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
 const parseSplitChatSentences = (chatSentences) =>{
     let chat = new Chat();
 
-    //check empty string...
-
     //regex
-    // note the *? at the end of the regex and see also https://stackoverflow.com/questions/10516458/regex-multiple-matches-on-same-line
-    //let regexpr = /(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)([ :,\w]*).*?/g;
-    
     //Modified to obtain Step 6 requirements
     let regexpr = /(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d[ \w]*[:])([ :,\w]*).*?/g;
     let chatItems = chatSentences.match(regexpr);
@@ -72,7 +64,6 @@ const parseSplitChatSentences = (chatSentences) =>{
         chat.items.push(chatItem);
     });
 
-    //console.log(chat);
     let items = chat.items;
     return items;
 }
