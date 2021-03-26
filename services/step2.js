@@ -61,7 +61,7 @@ const parseChatSentences = (chatSentences) =>{
     // (\r?\n) block of optional \r and a \n
     //let regexpr = /.*(?:$|\r?\n)/g;
 
-    //regex version 2, avoid black item at last. Match any new line *and* the \r\n $(end of string)
+    //regex version 2, avoid blanck item at last. Match any new line *and* the \r\n $(end of string)
     let regexpr = /[^\n]+(?:\r?\n|$)/g;
     let chatItems = chatSentences.match(regexpr);
 
