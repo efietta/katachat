@@ -15,11 +15,6 @@ const parseChatSentences = require("../services/step5");
 
 const createMapFromSingleSentence = (element, map) => {
 
-    console.log('Analyzing element: ' + element);
-
-    //let regexpr = /(?:[ \w]*)([ ])./g;
-    //let authorString = element.match(regexpr);
-
     // extract the first word if it's followed by blank space
     let authorKey = element.match(/^[\w]+(?=[ ])/g);
 
@@ -28,8 +23,12 @@ const createMapFromSingleSentence = (element, map) => {
     if (authorKey) {
         // for now all keys have the same score (have a look to Step 7)
         let authorScore = 1;
-        map.set(authorKey, authorScore);
-        console.log('Author key: ' + authorKey);
+        if (!map.has(authorKey.toString())) {
+            map.set(authorKey.toString(), authorScore);
+            console.log("Map size is:"+map.size);
+            console.log("Author key is:"+authorKey);
+        }
+
     }
 
 }
@@ -39,42 +38,28 @@ const parseSingleSentenceWithAuthors = (singleSentence, keyAuthorCustomer, keyAu
     let chatItem;
 
     // init values
-    let dateTime = '';
-    let mentionStr = '';
-    let sentenceStr = '';
+    let dateTime = "";
+    let mentionStr = "";
+    let sentenceStr = "";
     let typeStr;
 
-    //build regex for Customer
-    //const regexCustomer = new RegExp(`(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d ([${keyAuthorCustomer}]))(.*)`);
-    //build regex for Agent
-    //const regexCustomer = new RegExp(`(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d ([${keyAuthorAgent}]))(.*)`);
-
-    //dateTime = singleSentence.substr(0, 8);
-	
-	let authorCustomerStr = singleSentence.split(" ", 1).join(keyAuthorCustomer);
-	let authorAgentStr = singleSentence.split(" ", 1).join(keyAuthorAgent);
-
-    let leftString = singleSentence;
-
-    console.log("singleSentence is:" + singleSentence);
-    console.log("authorCustomerStr is:" + authorCustomerStr);
-    console.log("authorAgentStr is:" + authorAgentStr);
-    console.log("leftString is:" + leftString);
-
     //Check is Customer
-    if ((typeof leftString === 'string') && leftString.startsWith(authorCustomerStr)) {
-        let mentionStrLength = leftString.concat(keyAuthorCustomer).length;
-        mentionStr = singleSentence.slice(0, mentionStrLength);
-        sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
+    if ((typeof singleSentence === 'string') && singleSentence.startsWith(keyAuthorCustomer)) {
+        let mentionStrLength = keyAuthorCustomer.toString().length;
+        mentionStr = singleSentence.substr(0, mentionStrLength+ 1);
+        sentenceStr = singleSentence.substr(mentionStrLength + 1, singleSentence.length);
         typeStr = 'customer';
     }
     //Check is Agent
-    console.log("Result:"+ leftString.startsWith(authorAgentStr));
-    if ((typeof leftString === 'string') && leftString.startsWith(authorAgentStr)) {
-        let mentionStrLength = leftString.concat(keyAuthorAgent).length;
-        mentionStr = singleSentence.slice(0, mentionStrLength);
-        sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
+    if ((typeof singleSentence === 'string') && singleSentence.startsWith(keyAuthorAgent)) {
+        let mentionStrLength = keyAuthorAgent.toString().length;
+        mentionStr = singleSentence.substr(0, mentionStrLength + 1);
+        sentenceStr = singleSentence.substr(mentionStrLength + 1, singleSentence.length);
         typeStr = 'agent';
+    }
+    //If is not Agent and not Customer means that it is a normal phrase
+    if (!typeStr) {
+        sentenceStr = singleSentence.substr(0, singleSentence.length);
     }
 
     chatItem= {
@@ -92,11 +77,12 @@ const createKeyMap = (chatSentences) =>{
     let chat = new Chat();
 	chat.items = [];
 
-    //TODO: check empty string and use algorithms to clean the initial dataset.
+    //Suggestion for improvement: check empty string and use algorithms to clean the initial dataset.
 
     //Regex to split chat into blocks of sentences. Split by time and a blank space "HH:mm:ss ".
     let regexpr = /(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d[ ])/g;
     let chatStcnItems = chatSentences.split(regexpr);
+    chatStcnItems.shift();
 
     //create the array of time values (improvement possibile here...)
     let chatStcnItemsTime= chatSentences.match(regexpr);
@@ -107,34 +93,36 @@ const createKeyMap = (chatSentences) =>{
     //map of Author keys
     let map = new Map();
 
-     //for each item of chatStcnItems
-     chatStcnItems.forEach(element => {
+    //for each item of chatStcnItems
+    chatStcnItems.forEach(element => {
         let chatItem = createMapFromSingleSentence(element, map);
     });
-
+	
+	let keys = Array.from( map.keys() );
     //check the map of Authors
-    let keyAuthorCustomer = map.keys().next().value;
-    let keyAuthorAgent = map.keys().next().value; // instead of that we should use a function to get the item with best score.
+    let keyAuthorCustomer = keys[0];
+    let keyAuthorAgent = keys[1]; // instead of that we should use a function to get the item with best score.
 
-    //build the Chat Items loop backwards
-    let mentionToAdd = '';
-    for (var i = chatStcnItems.length - 1; i >= 0; i--) {
+    let sentenceToAdd = '';
+
+	for (var i = chatStcnItems.length - 1; i >= 0; i--) {
 
         chatItem = parseSingleSentenceWithAuthors(chatStcnItems[i], keyAuthorCustomer, keyAuthorAgent);
 
         if (chatItem.type) {
-            // this is a chat Item
-            // add string from the previous iteration
-            chatItem.mention += mentionToAdd;
+            // this is a chat Item. Add string from the previous iteration
+            chatItem.sentence = chatItem.sentence + sentenceToAdd;
             chatItem.date = chatStcnItemsTime[i];
+            chatItem.mention = chatItem.date + " " + chatItem.mention;
             chat.items.push(chatItem);
-            mentionToAdd = '';
+            sentenceToAdd = '';
         } else {
             // it is an element that not have Author inside. Concatenate for the next iteration
-            mentionToAdd += chatStcnItemsTime[i] + chatItem.mention;
+            sentenceToAdd = sentenceToAdd + chatStcnItemsTime[i] + chatItem.sentence;
         }
     }
 
+    chat.items = chat.items.reverse();
     return chat.items;
 }
 

@@ -16,12 +16,12 @@ describe ("Retrieve data from the chat with multiple sentences", () =>  {
     //Additional test for step6.js new file
     test('split in text block using HH:mm:ss as delimiter', () =>{
         let chat = "14:24:32 Customer Lorem ipsum dolor sit amet, consectetur adipiscing elit.14:26:15 Agent I received it at 12:24:48, ut blandit lectus.";
-        expect(createKeyMap(chat)).toBe(true);
+        expect(createKeyMap(chat).length).toEqual(2);
     });
 
     test('split in text block using HH:mm:ss as delimiter with blank spaces', () =>{
         let chat = "14:24:32 Customer Lorem ipsum dolor sit amet, consectetur adipiscing elit. 14:26:15 Agent I received it at 12:24:48 , ut blandit lectus.";
-        expect(createKeyMap(chat)).toBe(true);
+        expect(createKeyMap(chat).length).toEqual(2);
     });
 
 });
