@@ -1,8 +1,6 @@
 ## Kata Chat app ##
 -------------------------------------------------
------------- Test Excercise features
-
-Run application from command line.
+Test Excercise features running application from command line.
 
     node app.js [param1] [param2]
 
@@ -35,9 +33,7 @@ Run application from command line.
     node app.js d "14:20:03 Customer Hello 14:24:32 Customer Lorem ipsum dolor sit amet , consectetur adipiscing elit . 14:26:15 Agent I received it at 12:24:48 , ut blandit lectus . 14:50:09 Agent everything is ok."
 
 -------------------------------------------------
------------- Test with Jest
-
-From command line:
+Test with Jest, from command line:
 
     npm run test
 
