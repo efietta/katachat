@@ -20,15 +20,15 @@ function executeFn() {
         console.log(parseSingleSentence(chatInput)); 
     }
     if (stepInput == 'b') {
-        console.log(" ------------- "); 
+        console.log(" ----- OUTPUT -------- "); 
         console.log(parseChatSentences(chatInput)); 
     }
     if (stepInput == 'c') {
-        console.log(" ------------- "); 
+        console.log(" ----- OUTPUT -------- "); 
         console.log(parseSplitChatSentences(chatInput)); 
     }
     if (stepInput == 'd') {
-        console.log(" ------------- "); 
+        console.log(" ----- OUTPUT -------- "); 
         console.log(createKeyMap(chatInput)); 
     }
      

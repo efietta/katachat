@@ -29,8 +29,8 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
         let sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
 
         let typeStr = 'customer';
-        console.log('Customer user name extracted is: ' + customerUsername);
-        console.log('Customer user name now is: ' + mentionStr.slice(9, mentionStr.length));
+        //console.log('Customer user name extracted is: ' + customerUsername);
+        //console.log('Customer user name now is: ' + mentionStr.slice(9, mentionStr.length));
 
         if (mentionStr.slice(9, mentionStr.length) != customerUsername) {
             typeStr = 'agent';
@@ -69,8 +69,7 @@ const parseChatSentences = (chatSentences) =>{
         let chatItem = parseSingleSentence(element, customerUsername);
         chat.items.push(chatItem);
     });
-
-    console.log(chat);
+    
     let items = chat.items;
     return items;
 }

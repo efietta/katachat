@@ -15,7 +15,7 @@ describe ("Retrieve data from the chat with multiple sentences", () =>  {
     });
 
     test('four lines of chat without specific sepator', () =>{
-        let chat = "14:20:03 Customer Hello 14:24:32 Customer Lorem ipsum dolor sit amet , consectetur adipiscing elit . 14:26:15 Agent I received it at 12:24:48 , ut blandit lectus . 14:50:09 Agent is veverything ok?";
+        let chat = "14:20:03 Customer Hello 14:24:32 Customer Lorem ipsum dolor sit amet , consectetur adipiscing elit . 14:26:15 Agent I received it at 12:24:48 , ut blandit lectus . 14:50:09 Agent is everything ok?";
         expect(createKeyMap(chat).length).toEqual(4);
     });
 
