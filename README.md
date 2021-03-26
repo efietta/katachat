@@ -21,7 +21,9 @@ Run application from command line.
 
 --------- Example 2
 
-    node app.js b "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n14:26:15 Agent : Aliquam non cursus erat, ut blandit lectus."
+    node app.js b "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+14:26:15 Agent : Aliquam non cursus erat, ut blandit lectus."
+
 
 --------- Example 3
 
