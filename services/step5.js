@@ -49,7 +49,7 @@ const parseSingleSentence = (singleSentence, customerUsername) =>{
 
 
 
-const parseChatSentences = (chatSentences) =>{
+const parseSplitChatSentences = (chatSentences) =>{
     let chat = new Chat();
 
     //check empty string...
@@ -77,4 +77,4 @@ const parseChatSentences = (chatSentences) =>{
     return items;
 }
 
-module.exports = parseChatSentences;
+module.exports = parseSplitChatSentences;

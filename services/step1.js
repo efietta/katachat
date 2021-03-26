@@ -37,6 +37,8 @@ const parseSingleSentence = (singleSentence) =>{
     }
 
     let items = chat.items
+    //console.log('Step 1 result:');
+    //console.log(items);
     return items;
 }
 

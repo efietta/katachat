@@ -34,14 +34,49 @@ const createMapFromSingleSentence = (element, map) => {
 
 }
 
-const parseSingleSentenceWithAuthors = (element, keyAuthorCustomer, keyAuthorAgent) => {
+const parseSingleSentenceWithAuthors = (singleSentence, keyAuthorCustomer, keyAuthorAgent) => {
+
+    let chatItem;
+
+    // init values
+    let dateTime = '';
+    let mentionStr = '';
+    let sentenceStr = '';
+    let typeStr = '';
 
     //build regex for Customer
-    const regexCustomer = new RegExp(`(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d ([${keyAuthorCustomer}]))(.*)`);
+    //const regexCustomer = new RegExp(`(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d ([${keyAuthorCustomer}]))(.*)`);
     //build regex for Agent
-    const regexCustomer = new RegExp(`(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d ([${keyAuthorAgent}]))(.*)`);
+    //const regexCustomer = new RegExp(`(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d ([${keyAuthorAgent}]))(.*)`);
+
+    dateTime = singleSentence.substr(0, 8);
+
+    //TODO is Customer or Agent??'
+    if (singleSentence.split(" ", 1)) {
+        //Customer
+
+        let mentionStrLength = singleSentence.split(" ", 1).join(keyAuthorCustomer).length + 2;
+        mentionStr = singleSentence.slice(0, mentionStrLength);
+        sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
+        
+    }
+    /** 
+    if () {
+        //Agent
+
+    }
+    */
 
 
+    chatItem= {
+        date: dateTime,
+        mention: mentionStr,
+        sentence: sentenceStr,
+        type: typeStr
+    };
+
+
+    return chatItem;
 
 }
 
@@ -67,14 +102,23 @@ const createKeyMap = (chatSentences) =>{
     let keyAuthorCustomer = map.keys().next().value;
     let keyAuthorAgent = map.keys().next().value; // instead of that we should use a function to get the item with best score.
 
-    //
-    //FIXME devo unire le stringhe ... che contengono HH:mm:ss
+    //build the Chat Items loop backwards
+    let mentionToAdd = '';
+    for (var i = chatStcnItems.length - 1; i >= 0; i--) {
 
-    chatStcnItems.forEach(element => {
-        let chatItem = parseSingleSentenceWithAuthors(element, keyAuthorCustomer, keyAuthorAgent);
+        chatItem = parseSingleSentenceWithAuthors(chatStcnItems[i], keyAuthorCustomer, keyAuthorAgent);
         
-        chat.items.push(chatItem);
-    });
+        if (chatItem.mention) {
+            // this is a chat Item
+            // add string from the previous iteration
+            chatItem.mention += mentionToAdd;
+            chat.items.push(chatItem);
+            mentionToAdd = '';
+        } else {
+            // it is an element that not have Author inside. Concatenate for the next iteration
+            mentionToAdd += chatItem.mention;
+        }
+    }
 
     return true;
 }
