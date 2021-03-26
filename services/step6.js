@@ -42,31 +42,40 @@ const parseSingleSentenceWithAuthors = (singleSentence, keyAuthorCustomer, keyAu
     let dateTime = '';
     let mentionStr = '';
     let sentenceStr = '';
-    let typeStr = '';
+    let typeStr;
 
     //build regex for Customer
     //const regexCustomer = new RegExp(`(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d ([${keyAuthorCustomer}]))(.*)`);
     //build regex for Agent
     //const regexCustomer = new RegExp(`(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d ([${keyAuthorAgent}]))(.*)`);
 
-    dateTime = singleSentence.substr(0, 8);
+    //dateTime = singleSentence.substr(0, 8);
+	
+	let authorCustomerStr = singleSentence.split(" ", 1).join(keyAuthorCustomer);
+	let authorAgentStr = singleSentence.split(" ", 1).join(keyAuthorAgent);
 
-    //TODO is Customer or Agent??'
-    if (singleSentence.split(" ", 1)) {
-        //Customer
+    let leftString = singleSentence;
 
-        let mentionStrLength = singleSentence.split(" ", 1).join(keyAuthorCustomer).length + 2;
+    console.log("singleSentence is:" + singleSentence);
+    console.log("authorCustomerStr is:" + authorCustomerStr);
+    console.log("authorAgentStr is:" + authorAgentStr);
+    console.log("leftString is:" + leftString);
+
+    //Check is Customer
+    if ((typeof leftString === 'string') && leftString.startsWith(authorCustomerStr)) {
+        let mentionStrLength = leftString.concat(keyAuthorCustomer).length;
         mentionStr = singleSentence.slice(0, mentionStrLength);
         sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
-        
+        typeStr = 'customer';
     }
-    /** 
-    if () {
-        //Agent
-
+    //Check is Agent
+    console.log("Result:"+ leftString.startsWith(authorAgentStr));
+    if ((typeof leftString === 'string') && leftString.startsWith(authorAgentStr)) {
+        let mentionStrLength = leftString.concat(keyAuthorAgent).length;
+        mentionStr = singleSentence.slice(0, mentionStrLength);
+        sentenceStr = singleSentence.slice(mentionStrLength, singleSentence.length);
+        typeStr = 'agent';
     }
-    */
-
 
     chatItem= {
         date: dateTime,
@@ -75,13 +84,13 @@ const parseSingleSentenceWithAuthors = (singleSentence, keyAuthorCustomer, keyAu
         type: typeStr
     };
 
-
     return chatItem;
 
 }
 
 const createKeyMap = (chatSentences) =>{
     let chat = new Chat();
+	chat.items = [];
 
     //TODO: check empty string and use algorithms to clean the initial dataset.
 
@@ -89,13 +98,18 @@ const createKeyMap = (chatSentences) =>{
     let regexpr = /(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d[ ])/g;
     let chatStcnItems = chatSentences.split(regexpr);
 
+    //create the array of time values (improvement possibile here...)
+    let chatStcnItemsTime= chatSentences.match(regexpr);
+    chatStcnItemsTime.forEach(element => {
+        chatStcnItemsTime.push(element.trim());
+    });
+
     //map of Author keys
     let map = new Map();
 
      //for each item of chatStcnItems
      chatStcnItems.forEach(element => {
         let chatItem = createMapFromSingleSentence(element, map);
-        //chat.items.push(chatItem);
     });
 
     //check the map of Authors
@@ -107,20 +121,21 @@ const createKeyMap = (chatSentences) =>{
     for (var i = chatStcnItems.length - 1; i >= 0; i--) {
 
         chatItem = parseSingleSentenceWithAuthors(chatStcnItems[i], keyAuthorCustomer, keyAuthorAgent);
-        
-        if (chatItem.mention) {
+
+        if (chatItem.type) {
             // this is a chat Item
             // add string from the previous iteration
             chatItem.mention += mentionToAdd;
+            chatItem.date = chatStcnItemsTime[i];
             chat.items.push(chatItem);
             mentionToAdd = '';
         } else {
             // it is an element that not have Author inside. Concatenate for the next iteration
-            mentionToAdd += chatItem.mention;
+            mentionToAdd += chatStcnItemsTime[i] + chatItem.mention;
         }
     }
 
-    return true;
+    return chat.items;
 }
 
 module.exports = createKeyMap;

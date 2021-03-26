@@ -3,7 +3,7 @@
 Node version v15.12.0
 
 -------------------------------------------------
------------- Test Excercise features ------------
+------------ Test Excercise features
 
 Run application from command line.
 
@@ -15,26 +15,27 @@ Run application from command line.
         'c' standard function v2: process senteces with datetime (Step 5 function)
         'd' complex function: process chat (Step 6 and Step 7 functions)
 
----------
-Example 1
+--------- Example 1
 
-    node app.js a 14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    node app.js a "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 
----------
-Example 2
+--------- Example 2
 
-    node app.js d 14:24:32 Customer Lorem ipsum dolor sit amet, consectetur adipiscing elit.14:26:15 Agent I received it at 12:24:48, ut blandit lectus.
-    
+    node app.js d 14:24:32 "Customer Lorem ipsum dolor sit amet, consectetur adipiscing elit.14:26:15 Agent I received it at 12:24:48, ut blandit lectus."
+
+--------- Example 3
+
+    node app.js c "14:24:32 Customer : Lorem ipsum dolor sit amet, consectetur adipiscing elit.14:26:15 Agent : Aliquam non cursus erat, ut blandit lectus."
 
 -------------------------------------------------
------------- Test Excercise with Jest -----------
+------------ Test with Jest
 
 From command line:
 
     npm run test
 
 -------------------------------------------------
------------- Additional improvements ------------
+------------ Additional improvements
 
 Improvements starting from this code stratch:
 
@@ -48,7 +49,7 @@ Improvements starting from this code stratch:
 Have fun!
 
 -------------------------------------------------
------------- Additional features ----------------
+------------ Additional features
 
 Additional packages (view package.json dependencies): 
     npm install body-parser

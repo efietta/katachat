@@ -72,7 +72,7 @@ const parseSplitChatSentences = (chatSentences) =>{
         chat.items.push(chatItem);
     });
 
-    console.log(chat);
+    //console.log(chat);
     let items = chat.items;
     return items;
 }
