@@ -1,5 +1,5 @@
 /**
- * Index file to manage GET and POST requests.
+ * This is a simple index if you want to use APIs.
  */
 
 var express=require('express');
@@ -7,8 +7,6 @@ const bodyParser = require('body-parser');
 
 var app=express();
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(bodyParser.json());
-//app.use(bodyParser.raw());
 app.use(bodyParser.text());
 
 //GET method for the index page.
